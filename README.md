@@ -21,3 +21,7 @@ Demonstrating MongoDB index optimization
 
 ## Live Demo / Deployment Link: 
 Hosted on GCP Cloud Run free tier.
+
+### Swagger API Documentation:
+Available at: `/docs` endpoint of the deployed FastAPI backend, e.g., `https://your-deployment-url/docs`.
+On your local machine, you can access it at `http://localhost:8010/docs` after running the FastAPI server.
