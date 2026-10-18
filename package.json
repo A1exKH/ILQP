@@ -1,0 +1,24 @@
+{
+  "name": "ilqp",
+  "version": "1.0.0",
+  "description": "A modern flashcard & quiz builder where users create custom decks, tag them by language/topic, and take timed practice quizzes to test their knowledge.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/A1exKH/ILQP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/A1exKH/ILQP/issues"
+  },
+  "homepage": "https://github.com/A1exKH/ILQP#readme",
+  "dependencies": {
+    "dotenv": "^18.0.8",
+    "mongoose": "^9.11.2"
+  }
+}
