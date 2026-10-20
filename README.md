@@ -25,3 +25,9 @@ Hosted on GCP Cloud Run free tier.
 ### Swagger API Documentation:
 Available at: `/docs` endpoint of the deployed FastAPI backend, e.g., `https://your-deployment-url/docs`.
 On your local machine, you can access it at `http://localhost:8010/docs` after running the FastAPI server.
+
+### How to run the project locally:
+1. Clone the repository.
+2. Install dependencies.
+3. For backend, run `ILQP/backend$ python3 -m uvicorn app.main:app --reload --port 8010`.
+4. For frontend, run `ILQP/frontend$ npm run dev`.
