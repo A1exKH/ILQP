@@ -26,6 +26,25 @@ Hosted on GCP Cloud Run free tier.
 Available at: `/docs` endpoint of the deployed FastAPI backend, e.g., `https://your-deployment-url/docs`.
 On your local machine, you can access it at `http://localhost:8010/docs` after running the FastAPI server.
 
+#### REST API Route Definitions for Decks & Questions (/api/decks):
+Method  | Endpoint       | Description                                            | Request Body / Query                         | 
+GET     | /api/decks     | Fetch all decks (supports category/difficulty filters) | Query: ?category=spanish&difficulty=Beginner | 
+GET     | /api/decks/:id | Get single deck details (includes embedded questions)  | None                                         | 
+POST    | /api/decks     | Create a new quiz deck with questions                  | DeckCreateSchema                             | 
+PUT     | /api/decks/:id | Update deck metadata or question list                  | Updated Deck Object                          | 
+DELETE  | /api/decks/:id | Delete a deck and its associated attempts              | None                                         | 
+
+#### REST API for Quiz Engine & Submissions (/api/attempts)
+Method | Endpoint                   | Description                                     | Request Body /Query                   |     
+GET    | /api/attempts              | Submit completed quiz attempt & calculate score | { deckId, answers, completionTimeMs } | 
+GET    | /api/attempts/user/:userId | Get full quiz history for a specific user       | Query: ?limit=10                      | 
+GET    | /api/attempts/deck/:deckId | Get historical results for a specific deck      | None                                  | 
+
+#### REST API for Analytics & Dashboard (/api/analytics)
+Method | Endpoint                 | Description                              | Response Data                                  |     
+GET    | /api/analytics/dashboard | Aggregated user stats across all quizzes | Total quizzes taken, average score,            |
+       |                          |                                          |total time spent, mastery breakdown by category | 
+
 ### How to run the project locally:
 1. Clone the repository.
 2. Install dependencies.
