@@ -1,6 +1,14 @@
 # Interactive Learning & Quiz Platform (ILQP)
 A modern flashcard & quiz builder where users create custom decks, tag them by language/topic, and take timed practice quizzes to test their knowledge.
 
+## Project Documentation & Standards
+
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
+- [Security Policy](SECURITY.md)
+- [Accessibility Statement](ACCESSIBILITY.md)
+- [MIT License](LICENSE)
+
 ## Core Features:
 #### 1. Deck & Card Management (CRUD): 
 Create, edit, and delete quiz decks with multiple-choice or short-answer cards.
