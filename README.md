@@ -59,8 +59,18 @@ On your local machine, you can access it at `http://localhost:8010/docs` after r
 ### How to run the project locally:
 1. Clone the repository.
 2. Install dependencies.
-3. For backend, run `ILQP/backend$ python3 -m uvicorn app.main:app --reload --port 8010`.
-4. For frontend, run `ILQP/frontend$ npm run dev`.
+3. For backend, run: 
+```bash
+cd ~/github/ILQP/backend
+source venv/bin/activate
+ILQP/backend$ python3 -m uvicorn app.main:app --reload --port 8010
+```
+
+4. For frontend, run 
+```bash
+cd ~/github/ILQP/frontend
+ILQP/frontend$ npm run dev
+```
 
 
 ### Project wiki:
