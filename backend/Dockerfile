@@ -4,9 +4,10 @@ FROM python:3.12-slim
 # Set working directory inside container
 WORKDIR /app
 
-# Install system dependencies (if any required for compiling packages)
+# Install system dependencies AND root CA certificates for SSL/TLS
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install python dependencies
