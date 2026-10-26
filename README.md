@@ -161,6 +161,29 @@ All tests are executed automatically on every push and pull request to main and 
 - **Database Service**: Spins up a live **MongoDB service container** (mongo:latest) on port 27017 to ensure all database-backed integration tests execute against a real database instance rather than mocks.
 
 
+## Cloud Architecture & Deployment (CI/CD)
+
+The ILQP backend is fully containerized and deployed automatically to **Google Cloud Platform (GCP)** using a modern, zero-downtime serverless architecture.
+
+### Infrastructure Overview
+* **Hosting Platform:** **Google Cloud Run** (Serverless container runtime that automatically scales up under load and scales down to zero when idle).
+* **Container Registry:** **Google Cloud Artifact Registry** (Stores versioned Docker images securely within GCP).
+* **Database:** **MongoDB Atlas** (Cloud-hosted distributed database cluster with secure TLS/SSL connectivity).
+
+---
+
+### CI/CD Pipeline (GitHub Actions)
+
+We use **GitHub Actions** (`.github/workflows/backend-ci.yml`) to achieve fully automated Continuous Integration and Continuous Deployment (CI/CD) on every push to the `main` branch.
+
+#### Pipeline Stages:
+1. **Automated Testing:** Spins up an ephemeral `mongo:latest` service container in an isolated runner, installing dependencies and running the complete **Pytest** and `pytest-cov` test suite.
+2. **Keyless OIDC Authentication:** Authenticates securely with Google Cloud using **Workload Identity Federation (WIF)**, eliminating the security risks of long-lived service account JSON keys.
+3. **Docker Build & Push:** Packages the FastAPI application using a custom multi-step `Dockerfile` (optimized with `python:3.12-slim` and system `ca-certificates` for secure TLS handshakes) and pushes the image to GCP Artifact Registry.
+4. **Cloud Run Deployment:** Automatically deploys the latest container revision to **Google Cloud Run**, injecting production environment secrets securely at runtime.
+
+---
+
 ## Project Documentation & Standards
 
 - [Code of Conduct](CODE_OF_CONDUCT.md)
