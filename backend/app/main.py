@@ -5,15 +5,16 @@ from app.routers import decks, attempts, analytics
 
 app = FastAPI(title="ILQP API", version="1.0.0")
 
-# CORS Config for React frontend (Vite) can communicate with FastAPI
+# Restrict CORS to your Vercel production frontend and local dev environments
 origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    "https://ilqp.vercel.app",
+    "http://localhost:5173",  # For local Vite development
+    "http://localhost:3000",  # Alternative local port
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # TODO (Production):Restrict this to frontend URL later
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
