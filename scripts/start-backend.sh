@@ -18,4 +18,4 @@ fi
 
 # Start Uvicorn development server
 echo "### Launching Uvicorn on http://127.0.0.1:8010..."
-python3 uvicorn app.main:app --reload --port 8010
+python3 -m uvicorn app.main:app --reload --port 8010
