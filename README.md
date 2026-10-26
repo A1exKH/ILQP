@@ -55,7 +55,6 @@ On your local machine, you can access it at `http://localhost:8010/docs` after r
 | :---: |  :---: |  :---: |  :---: | 
 | GET    | /api/analytics/dashboard | Aggregated user stats across all quizzes | Total quizzes taken, average score, total time spent, mastery breakdown by category |
 
-
 ### How to run the project locally:
 1. Clone the repository.
 2. Install dependencies.
@@ -70,6 +69,20 @@ ILQP/backend$ python3 -m uvicorn app.main:app --reload --port 8010
 ```bash
 cd ~/github/ILQP/frontend
 ILQP/frontend$ npm run dev
+```
+
+### Quick Start
+
+Get the platform running locally in two terminals:
+
+1. Start Backend (FastAPI):**
+```bash
+./scripts/start-backend.sh
+```
+
+2. Start Frontend (React & Vite):
+```bash
+./scripts/start-frontend.sh
 ```
 
 
