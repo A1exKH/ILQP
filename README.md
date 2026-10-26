@@ -6,6 +6,7 @@
 [![React](https://img.shields.io/badge/React-18-61DAFB)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248)](https://www.mongodb.com/atlas)
+[![Backend CI](https://github.com/A1exKH/ILQP/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/A1exKH/ILQP/actions/workflows/backend-ci.yml)
 
 A modern, full-stack flashcard and quiz creation platform designed for interactive learning. 
 
