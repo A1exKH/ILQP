@@ -1,4 +1,4 @@
-name: Backend CI (Pytest & Code Quality)
+name: Backend CI/CD Pipeline
 
 on:
   push:
@@ -30,12 +30,53 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
-          pip install pytest pytest-asyncio httpx mongomock-motor
+          pip install pytest pytest-asyncio httpx mongomock-motor pytest-cov
 
-      - name: Run Pytest Suite
+      - name: Run Pytest Suite with Coverage
         env:
           MONGO_URI: "mongodb://localhost:27017"
           DB_NAME: "ilqp_test_db"
         run: |
           cd backend
           pytest --cov=app --cov-report=term-missing -v
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      id-token: write  
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v7
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: 'github-actions-deployer@ilqp-production.iam.gserviceaccount.com'
+
+      - name: Configure Docker to use GCP Artifact Registry
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Build and Push Docker Image
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          IMAGE_TAG="us-central1-docker.pkg.dev/$PROJECT_ID/ilqp-repo/ilqp-backend:latest"
+          docker build -t $IMAGE_TAG ./backend
+          docker push $IMAGE_TAG
+
+      - name: Deploy to Google Cloud Run
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          gcloud run deploy ilqp-backend \
+            --image="us-central1-docker.pkg.dev/$PROJECT_ID/ilqp-repo/ilqp-backend:latest" \
+            --platform=managed \
+            --region=us-central1 \
+            --allow-unauthenticated \
+            --set-env-vars="MONGO_URI=${{ secrets.MONGO_URI }},DB_NAME=${{ secrets.DB_NAME }}"
