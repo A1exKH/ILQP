@@ -4,6 +4,7 @@ anyio==4.15.1
 asgi-lifespan==2.1.0
 certifi==2026.10.23
 click==8.5.0
+coverage==7.17.0
 dnspython==2.9.0
 Faker==40.43.0
 fastapi==0.143.3
@@ -24,6 +25,7 @@ Pygments==2.21.0
 pymongo==4.19.0
 pytest==9.1.1
 pytest-asyncio==1.4.1
+pytest-cov==7.1.0
 python-dotenv==1.2.4
 pytz==2026.5
 sentinels==1.1.1

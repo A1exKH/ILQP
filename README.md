@@ -120,6 +120,47 @@ npm install
 npm run dev
 ```
 
+## Testing & Quality Assurance
+
+The ILQP backend features a comprehensive test suite built with **Pytest**, **HTTPX**, and **Pytest-Cov**, covering pure business logic unit tests, asynchronous FastAPI endpoint integration tests, and MongoDB database interactions.
+
+### Test Suite Architecture
+
+1. **Unit Tests (`tests/test_quiz_engine.py`)**
+   - **Quiz Scoring Logic:** Verifies accurate percentage calculations across 100% scores, partial credit, and empty submission edge cases.
+   - **Timing Validation:** Tests average time calculation per question and validates realistic completion time bounds.
+
+2. **API Route Integration Tests (`tests/test_decks_api.py`, `tests/test_attempts_api.py`, `tests/test_analytics_api.py`)**
+   - **Deck Management (`/api/decks`):** Validates deck creation payloads, required schema fields, and category/difficulty query filtering.
+   - **Quiz Submissions (`/api/attempts`):** Tests quiz attempt logging, scoring computation, user quiz history retrieval, and error handling for non-existent resources.
+   - **Analytics Dashboard (`/api/analytics/dashboard`):** Verifies aggregated user stats (total quizzes, average scores, time spent) and safeguards against division-by-zero for zero-history users.
+
+### Running Tests Locally
+
+To run the test suite locally in your development environment:
+
+1. **Activate your virtual environment:**
+```bash
+source venv/bin/activate
+cd backend
+```
+
+2. **Run Pytest with coverage reporting:**
+```bash
+pytest --cov=app --cov-report=term-missing -v
+```
+
+### Code Coverage Metrics
+We use pytest-cov to track line-by-line test coverage across all application routers, models, and core engines. 
+
+Our CI pipeline enforces clean execution and maintains high test coverage standards across core business features.
+
+### CI/CD Automation (GitHub Actions)
+All tests are executed automatically on every push and pull request to main and development branches via GitHub Actions (.github/workflows/backend-ci.yml).
+- **Environment**: Runs on isolated Ubuntu runners with **Python 3.12**.
+- **Database Service**: Spins up a live **MongoDB service container** (mongo:latest) on port 27017 to ensure all database-backed integration tests execute against a real database instance rather than mocks.
+
+
 ## Project Documentation & Standards
 
 - [Code of Conduct](CODE_OF_CONDUCT.md)
