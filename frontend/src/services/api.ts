@@ -1,11 +1,18 @@
 import axios from 'axios';
 
-// Automatically picks up VITE_API_URL from Vercel in production, 
-// or falls back to your local port (8010) during local development
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8010';
+// Dynamically determine the backend URL based on where the app is loaded
+const getApiBaseUrl = () => {
+  // If you are running locally 
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://127.0.0.1:8010';
+  }
+  
+  // If you are running in production on Vercel (or any other live domain)
+  return 'https://ilqp-backend-278271061546.us-central1.run.app';
+};
 
 const API = axios.create({
-  baseURL: `${API_BASE_URL}/api`,
+  baseURL: `${getApiBaseUrl()}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
