@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API from '../services/api';
 import type { Deck, AttemptResponse } from '../types';
@@ -15,7 +15,6 @@ export default function QuizTaker() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [startTime, setStartTime] = useState<number>(0);
-  const [elapsedMs, setElapsedMs] = useState<number>(0);
   
   // Submission result state
   const [submitting, setSubmitting] = useState<boolean>(false);
