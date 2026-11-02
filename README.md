@@ -141,8 +141,8 @@ To run the test suite locally in your development environment:
 
 1. **Activate your virtual environment:**
 ```bash
-source venv/bin/activate
 cd backend
+source venv/bin/activate
 ```
 
 2. **Run Pytest with coverage reporting:**
