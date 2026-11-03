@@ -25,12 +25,13 @@ class DeckCreate(BaseModel):
     questions: List[Question] = Field(..., description="List of embedded questions")
 
 class DeckResponse(DeckCreate):
-    id: str = Field(..., alias="_id", description="MongoDB unique identifier string")
-    createdAt: datetime
-    updatedAt: datetime
+    id: str = Field(..., alias="id")
+    createdAt: Optional[datetime] = None
+    updatedAt: Optional[datetime] = None
 
     class Config:
         populate_by_name = True
+        arbitrary_types_allowed = True
 
 
 # ==========================================
