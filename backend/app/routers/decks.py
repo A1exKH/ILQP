@@ -89,19 +89,23 @@ async def update_deck(id: str, deck_data: DeckCreate):
     if not ObjectId.is_valid(id):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid deck ID format")
 
+    deck_id_obj = ObjectId(id)
+    
+    # Check if deck exists first so we return 404 instead of validation errors
+    existing_deck = await db_instance.db["decks"].find_one({"_id": deck_id_obj})
+    if not existing_deck:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Deck not found")
+
     update_dict = deck_data.dict()
     update_dict["updatedAt"] = datetime.utcnow()
     update_dict["category"] = update_dict["category"].lower()
 
-    result = await db_instance.db["decks"].update_one(
-        {"_id": ObjectId(id)},
+    await db_instance.db["decks"].update_one(
+        {"_id": deck_id_obj},
         {"$set": update_dict}
     )
 
-    if result.matched_count == 0:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Deck not found")
-
-    updated_deck = await db_instance.db["decks"].find_one({"_id": ObjectId(id)})
+    updated_deck = await db_instance.db["decks"].find_one({"_id": deck_id_obj})
     return deck_helper(updated_deck)
 
 # ==========================================
