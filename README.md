@@ -150,6 +150,43 @@ source venv/bin/activate
 pytest --cov=app --cov-report=term-missing -v
 ```
 
+3. **View coverage report:**
+```bash
+# Coverage summary will be displayed in the terminal, highlighting untested lines.
+# For a detailed HTML report:
+coverage html
+# Open the generated report in your browser:
+open htmlcov/index.html
+```
+
+4. **Run tests against a live MongoDB instance:**
+   - Ensure your MongoDB Atlas cluster is running and accessible.
+   - Set the `MONGO_URI` environment variable to point to your database before executing tests:
+```bash
+export MONGO_URI="mongodb+srv://<username>:<password>@cluster0.mongodb.net/test?retryWrites=true&w=majority"
+pytest --cov=app --cov-report=term-missing -v
+```   
+
+5. **Run tests in isolation with a temporary MongoDB container:**
+   - If you prefer not to use your production database, you can spin up a temporary MongoDB container for testing:
+```bash
+docker run --name ilqp-test-mongo -d -p 27017:27017
+export MONGO_URI="mongodb://localhost:27017/test"
+pytest --cov=app --cov-report=term-missing -v
+docker stop ilqp-test-mongo && docker rm ilqp-test-mongo
+```
+
+6. **Continuous Integration (CI) Testing:**
+   - All tests are automatically executed on every push and pull request to the `main` and `development` branches via GitHub Actions. 
+   The CI pipeline ensures that all tests pass and maintains high code quality standards.     
+
+
+7. **How to Run Pytest and View the Printed Output**
+   - To see detailed output during test execution, use the `-s` flag with pytest:
+```bash
+pytest -s --cov=app --cov-report=term-missing -v
+```
+
 ### Code Coverage Metrics
 We use pytest-cov to track line-by-line test coverage across all application routers, models, and core engines. 
 
